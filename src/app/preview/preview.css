@@ -1,0 +1,70 @@
+/* Shared utilities for preview aesthetics */
+
+/* Font utility classes (each preview layout loads fonts into these variables) */
+.pf-display { font-family: var(--font-fraunces), Georgia, 'Times New Roman', serif; }
+.pf-sans    { font-family: var(--font-instrument-sans), system-ui, -apple-system, sans-serif; }
+.pf-serif-i { font-family: var(--font-instrument-serif), Georgia, serif; font-style: italic; }
+.pf-mono    { font-family: var(--font-jetbrains-mono), 'Courier New', monospace; }
+.pf-news    { font-family: var(--font-newsreader), Georgia, serif; }
+
+/* Paper grain (warm) */
+.grain-paper::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  z-index: 80;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.07 0 0 0 0 0.05 0 0 0 0.45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+/* Film grain (for dark noir) */
+.grain-film::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  z-index: 80;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* Halftone dots — used by riso */
+.halftone-dots {
+  background-image: radial-gradient(currentColor 22%, transparent 24%);
+  background-size: 5px 5px;
+}
+
+/* Card flip */
+.perspective-1000 { perspective: 1400px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+/* Reveal animations */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(1.2rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes rule-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.rise   { opacity: 0; animation: rise 0.9s cubic-bezier(0.2,0.7,0.15,1) forwards; }
+.rule-in { transform-origin: left; animation: rule-in 1.2s cubic-bezier(0.25,0.7,0.1,1) forwards; }
+.fade-in { opacity: 0; animation: fade-in 1.2s ease-out forwards; }
+
+/* Generic reset for preview content (inherits body, but we lock it) */
+.preview-root, .preview-root * {
+  box-sizing: border-box;
+}
+.preview-root {
+  font-feature-settings: "ss01", "ss02", "cv11";
+}
+.preview-root a { color: inherit; text-decoration: none; }
