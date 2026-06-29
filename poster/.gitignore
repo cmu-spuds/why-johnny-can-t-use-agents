@@ -1,0 +1,14 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Working backups / scratch (session-specific)
+poster.base
+*.4ft-backup
+*.36in-backup
+poster-grid.*
+poster-production.tex
